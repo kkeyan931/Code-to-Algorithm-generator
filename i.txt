@@ -1,0 +1,19 @@
+int function ( int a , int b ) {
+
+    printf ("hii");
+    printf ("hello");
+
+    printf ("%d",a);
+
+}
+
+ 
+
+
+char function1 (int a){
+    scanf ("%d",&a);
+
+    return a;
+}
+
+ 

@@ -1,0 +1,44 @@
+#include <stdio.h>
+int main(){
+
+    int a;
+    int b;
+    a = 5;
+    
+    for (a = 0;a < b;a++){
+        printf ("welcome");
+    }
+    
+    while (a < b){
+        printf ("hello");
+    }
+
+
+    scanf ("%d",&a);
+
+    do {
+        printf ("%d",a);
+        scanf ("%d",&a);
+    } while(a<b);
+
+    function1 (a);
+
+    if (a > b){
+        printf ("hii");
+    }
+    else{
+        scanf ("%d",&b);
+    }
+
+    return 0;
+    
+}
+
+int function ( int a , int b ) {
+
+    printf ("hii");
+    printf ("hello");
+
+    printf ("%d",a);
+
+}

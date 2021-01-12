@@ -1,0 +1,1427 @@
+Terminals unused in grammar
+
+    SCAN
+    ENDIF
+    ELSE
+    DO
+    RETURN
+    TYPE
+    ENDDOWHILE
+
+
+Grammar
+
+    0 $accept: START $end
+
+    1 $@1: %empty
+
+    2 START: BEG $@1 CODE END
+
+    3 CODE: MAIN
+    4     | STMT
+    5     | CODE STMT
+    6     | ST
+    7     | CODE ST
+
+    8 STMT: EXPR
+    9     | DEC
+   10     | INIT
+
+   11 $@2: %empty
+
+   12 $@3: %empty
+
+   13 ST: IF $@2 OPEN CON $@3 CLOSE COPEN CODE CCLOSE
+
+   14 $@4: %empty
+
+   15 $@5: %empty
+
+   16 ST: WHILE $@4 EXPR THEN $@5 CODE ENDWHILE
+
+   17 $@6: %empty
+
+   18 $@7: %empty
+
+   19 ST: START_PROCEDURE NAME_PROCEDURE OPEN $@6 parameter_list CLOSE $@7 CODE END_FUNCTION
+
+   20 $@8: %empty
+
+   21 $@9: %empty
+
+   22 ST: FOR $@8 INIT REPEAT $@9 CODE ENDFOR
+   23   | PR
+   24   | SC
+
+   25 parameter_list: VAR DATATYPE
+   26               | parameter_list COMMA VAR DATATYPE
+
+   27 $@10: %empty
+
+   28 EXPR: E RELOP $@10 E
+
+   29 $@11: %empty
+
+   30 EXPR: E LOGOP $@11 E
+   31     | E
+
+   32 $@12: %empty
+
+   33 E: E AS $@12 T
+   34  | T
+
+   35 $@13: %empty
+
+   36 T: T MD $@13 F
+   37  | F
+
+   38 F: VAR
+   39  | NUM
+   40  | OPEN E CLOSE
+
+   41 $@14: %empty
+
+   42 N: VAR $@14 N
+   43  | %empty
+
+   44 DEC: ASSIGN OPEN VAR DATATYPE CLOSE
+
+   45 INIT: ASSIGN VAR TO NUM
+   46     | ASSIGN VAR TO VAR
+   47     | VAR FROM NUM TO NUM
+
+   48 $@15: %empty
+
+   49 INIT: VAR Q $@15 E
+
+   50 PR: PRINT DATATYPE COMMA VAR
+   51   | PRINT OPEN QUOTE N QUOTE CLOSE SEMI
+
+   52 SC: READ DATATYPE COMMA VAR
+
+   53 CON: VAR RELOP VAR
+   54    | VAR RELOP NUM
+   55    | VAR LOGOP VAR
+   56    | BOOL
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    BEG (258) 2
+    END (259) 2
+    ASSIGN (260) 44 45 46
+    TO (261) 45 46 47
+    PRINT (262) 50 51
+    SCAN (263)
+    COMMA (264) 26 50 52
+    OPEN (265) 13 19 40 44 51
+    CLOSE (266) 13 19 40 44 51
+    IF (267) 13
+    ENDIF (268)
+    THEN (269) 16
+    ELSE (270)
+    WHILE (271) 16
+    ENDWHILE (272) 16
+    DO (273)
+    RETURN (274)
+    MAIN (275) 3
+    SEMI (276) 51
+    TYPE (277)
+    COPEN (278) 13
+    CCLOSE (279) 13
+    START_PROCEDURE (280) 19
+    END_FUNCTION (281) 19
+    ENDDOWHILE (282)
+    FOR (283) 22
+    REPEAT (284) 22
+    ENDFOR (285) 22
+    FROM (286) 47
+    READ (287) 52
+    QUOTE (288) 51
+    VAR <code> (289) 25 26 38 42 44 45 46 47 49 50 52 53 54 55
+    NUM <code> (290) 39 45 47 54
+    DATATYPE <code> (291) 25 26 44 50 52
+    RELOP <code> (292) 28 53 54
+    LOGOP <code> (293) 30 55
+    BOOL <code> (294) 56
+    MD <code> (295) 36
+    AS <code> (296) 33
+    Q <code> (297) 49
+    NAME_PROCEDURE <code> (298) 19
+
+
+Nonterminals, with rules where they appear
+
+    $accept (44)
+        on left: 0
+    START (45)
+        on left: 2
+        on right: 0
+    $@1 (46)
+        on left: 1
+        on right: 2
+    CODE (47)
+        on left: 3 4 5 6 7
+        on right: 2 5 7 13 16 19 22
+    STMT (48)
+        on left: 8 9 10
+        on right: 4 5
+    ST (49)
+        on left: 13 16 19 22 23 24
+        on right: 6 7
+    $@2 (50)
+        on left: 11
+        on right: 13
+    $@3 (51)
+        on left: 12
+        on right: 13
+    $@4 (52)
+        on left: 14
+        on right: 16
+    $@5 (53)
+        on left: 15
+        on right: 16
+    $@6 (54)
+        on left: 17
+        on right: 19
+    $@7 (55)
+        on left: 18
+        on right: 19
+    $@8 (56)
+        on left: 20
+        on right: 22
+    $@9 (57)
+        on left: 21
+        on right: 22
+    parameter_list (58)
+        on left: 25 26
+        on right: 19 26
+    EXPR (59)
+        on left: 28 30 31
+        on right: 8 16
+    $@10 (60)
+        on left: 27
+        on right: 28
+    $@11 (61)
+        on left: 29
+        on right: 30
+    E (62)
+        on left: 33 34
+        on right: 28 30 31 33 40 49
+    $@12 (63)
+        on left: 32
+        on right: 33
+    T (64)
+        on left: 36 37
+        on right: 33 34 36
+    $@13 (65)
+        on left: 35
+        on right: 36
+    F (66)
+        on left: 38 39 40
+        on right: 36 37
+    N (67)
+        on left: 42 43
+        on right: 42 51
+    $@14 (68)
+        on left: 41
+        on right: 42
+    DEC (69)
+        on left: 44
+        on right: 9
+    INIT (70)
+        on left: 45 46 47 49
+        on right: 10 22
+    $@15 (71)
+        on left: 48
+        on right: 49
+    PR (72)
+        on left: 50 51
+        on right: 23
+    SC (73)
+        on left: 52
+        on right: 24
+    CON (74)
+        on left: 53 54 55 56
+        on right: 13
+
+
+State 0
+
+    0 $accept: . START $end
+
+    BEG  shift, and go to state 1
+
+    START  go to state 2
+
+
+State 1
+
+    2 START: BEG . $@1 CODE END
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 3
+
+
+State 2
+
+    0 $accept: START . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    2 START: BEG $@1 . CODE END
+
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    MAIN             shift, and go to state 10
+    START_PROCEDURE  shift, and go to state 11
+    FOR              shift, and go to state 12
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    CODE  go to state 16
+    STMT  go to state 17
+    ST    go to state 18
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 4
+
+    0 $accept: START $end .
+
+    $default  accept
+
+
+State 5
+
+   44 DEC: ASSIGN . OPEN VAR DATATYPE CLOSE
+   45 INIT: ASSIGN . VAR TO NUM
+   46     | ASSIGN . VAR TO VAR
+
+    OPEN  shift, and go to state 27
+    VAR   shift, and go to state 28
+
+
+State 6
+
+   50 PR: PRINT . DATATYPE COMMA VAR
+   51   | PRINT . OPEN QUOTE N QUOTE CLOSE SEMI
+
+    OPEN      shift, and go to state 29
+    DATATYPE  shift, and go to state 30
+
+
+State 7
+
+   40 F: OPEN . E CLOSE
+
+    OPEN  shift, and go to state 7
+    VAR   shift, and go to state 31
+    NUM   shift, and go to state 15
+
+    E  go to state 32
+    T  go to state 21
+    F  go to state 22
+
+
+State 8
+
+   13 ST: IF . $@2 OPEN CON $@3 CLOSE COPEN CODE CCLOSE
+
+    $default  reduce using rule 11 ($@2)
+
+    $@2  go to state 33
+
+
+State 9
+
+   16 ST: WHILE . $@4 EXPR THEN $@5 CODE ENDWHILE
+
+    $default  reduce using rule 14 ($@4)
+
+    $@4  go to state 34
+
+
+State 10
+
+    3 CODE: MAIN .
+
+    $default  reduce using rule 3 (CODE)
+
+
+State 11
+
+   19 ST: START_PROCEDURE . NAME_PROCEDURE OPEN $@6 parameter_list CLOSE $@7 CODE END_FUNCTION
+
+    NAME_PROCEDURE  shift, and go to state 35
+
+
+State 12
+
+   22 ST: FOR . $@8 INIT REPEAT $@9 CODE ENDFOR
+
+    $default  reduce using rule 20 ($@8)
+
+    $@8  go to state 36
+
+
+State 13
+
+   52 SC: READ . DATATYPE COMMA VAR
+
+    DATATYPE  shift, and go to state 37
+
+
+State 14
+
+   38 F: VAR .
+   47 INIT: VAR . FROM NUM TO NUM
+   49     | VAR . Q $@15 E
+
+    FROM  shift, and go to state 38
+    Q     shift, and go to state 39
+
+    $default  reduce using rule 38 (F)
+
+
+State 15
+
+   39 F: NUM .
+
+    $default  reduce using rule 39 (F)
+
+
+State 16
+
+    2 START: BEG $@1 CODE . END
+    5 CODE: CODE . STMT
+    7     | CODE . ST
+
+    END              shift, and go to state 40
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    START_PROCEDURE  shift, and go to state 11
+    FOR              shift, and go to state 12
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    STMT  go to state 41
+    ST    go to state 42
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 17
+
+    4 CODE: STMT .
+
+    $default  reduce using rule 4 (CODE)
+
+
+State 18
+
+    6 CODE: ST .
+
+    $default  reduce using rule 6 (CODE)
+
+
+State 19
+
+    8 STMT: EXPR .
+
+    $default  reduce using rule 8 (STMT)
+
+
+State 20
+
+   28 EXPR: E . RELOP $@10 E
+   30     | E . LOGOP $@11 E
+   31     | E .
+   33 E: E . AS $@12 T
+
+    RELOP  shift, and go to state 43
+    LOGOP  shift, and go to state 44
+    AS     shift, and go to state 45
+
+    $default  reduce using rule 31 (EXPR)
+
+
+State 21
+
+   34 E: T .
+   36 T: T . MD $@13 F
+
+    MD  shift, and go to state 46
+
+    $default  reduce using rule 34 (E)
+
+
+State 22
+
+   37 T: F .
+
+    $default  reduce using rule 37 (T)
+
+
+State 23
+
+    9 STMT: DEC .
+
+    $default  reduce using rule 9 (STMT)
+
+
+State 24
+
+   10 STMT: INIT .
+
+    $default  reduce using rule 10 (STMT)
+
+
+State 25
+
+   23 ST: PR .
+
+    $default  reduce using rule 23 (ST)
+
+
+State 26
+
+   24 ST: SC .
+
+    $default  reduce using rule 24 (ST)
+
+
+State 27
+
+   44 DEC: ASSIGN OPEN . VAR DATATYPE CLOSE
+
+    VAR  shift, and go to state 47
+
+
+State 28
+
+   45 INIT: ASSIGN VAR . TO NUM
+   46     | ASSIGN VAR . TO VAR
+
+    TO  shift, and go to state 48
+
+
+State 29
+
+   51 PR: PRINT OPEN . QUOTE N QUOTE CLOSE SEMI
+
+    QUOTE  shift, and go to state 49
+
+
+State 30
+
+   50 PR: PRINT DATATYPE . COMMA VAR
+
+    COMMA  shift, and go to state 50
+
+
+State 31
+
+   38 F: VAR .
+
+    $default  reduce using rule 38 (F)
+
+
+State 32
+
+   33 E: E . AS $@12 T
+   40 F: OPEN E . CLOSE
+
+    CLOSE  shift, and go to state 51
+    AS     shift, and go to state 45
+
+
+State 33
+
+   13 ST: IF $@2 . OPEN CON $@3 CLOSE COPEN CODE CCLOSE
+
+    OPEN  shift, and go to state 52
+
+
+State 34
+
+   16 ST: WHILE $@4 . EXPR THEN $@5 CODE ENDWHILE
+
+    OPEN  shift, and go to state 7
+    VAR   shift, and go to state 31
+    NUM   shift, and go to state 15
+
+    EXPR  go to state 53
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+
+
+State 35
+
+   19 ST: START_PROCEDURE NAME_PROCEDURE . OPEN $@6 parameter_list CLOSE $@7 CODE END_FUNCTION
+
+    OPEN  shift, and go to state 54
+
+
+State 36
+
+   22 ST: FOR $@8 . INIT REPEAT $@9 CODE ENDFOR
+
+    ASSIGN  shift, and go to state 55
+    VAR     shift, and go to state 56
+
+    INIT  go to state 57
+
+
+State 37
+
+   52 SC: READ DATATYPE . COMMA VAR
+
+    COMMA  shift, and go to state 58
+
+
+State 38
+
+   47 INIT: VAR FROM . NUM TO NUM
+
+    NUM  shift, and go to state 59
+
+
+State 39
+
+   49 INIT: VAR Q . $@15 E
+
+    $default  reduce using rule 48 ($@15)
+
+    $@15  go to state 60
+
+
+State 40
+
+    2 START: BEG $@1 CODE END .
+
+    $default  reduce using rule 2 (START)
+
+
+State 41
+
+    5 CODE: CODE STMT .
+
+    $default  reduce using rule 5 (CODE)
+
+
+State 42
+
+    7 CODE: CODE ST .
+
+    $default  reduce using rule 7 (CODE)
+
+
+State 43
+
+   28 EXPR: E RELOP . $@10 E
+
+    $default  reduce using rule 27 ($@10)
+
+    $@10  go to state 61
+
+
+State 44
+
+   30 EXPR: E LOGOP . $@11 E
+
+    $default  reduce using rule 29 ($@11)
+
+    $@11  go to state 62
+
+
+State 45
+
+   33 E: E AS . $@12 T
+
+    $default  reduce using rule 32 ($@12)
+
+    $@12  go to state 63
+
+
+State 46
+
+   36 T: T MD . $@13 F
+
+    $default  reduce using rule 35 ($@13)
+
+    $@13  go to state 64
+
+
+State 47
+
+   44 DEC: ASSIGN OPEN VAR . DATATYPE CLOSE
+
+    DATATYPE  shift, and go to state 65
+
+
+State 48
+
+   45 INIT: ASSIGN VAR TO . NUM
+   46     | ASSIGN VAR TO . VAR
+
+    VAR  shift, and go to state 66
+    NUM  shift, and go to state 67
+
+
+State 49
+
+   51 PR: PRINT OPEN QUOTE . N QUOTE CLOSE SEMI
+
+    VAR  shift, and go to state 68
+
+    $default  reduce using rule 43 (N)
+
+    N  go to state 69
+
+
+State 50
+
+   50 PR: PRINT DATATYPE COMMA . VAR
+
+    VAR  shift, and go to state 70
+
+
+State 51
+
+   40 F: OPEN E CLOSE .
+
+    $default  reduce using rule 40 (F)
+
+
+State 52
+
+   13 ST: IF $@2 OPEN . CON $@3 CLOSE COPEN CODE CCLOSE
+
+    VAR   shift, and go to state 71
+    BOOL  shift, and go to state 72
+
+    CON  go to state 73
+
+
+State 53
+
+   16 ST: WHILE $@4 EXPR . THEN $@5 CODE ENDWHILE
+
+    THEN  shift, and go to state 74
+
+
+State 54
+
+   19 ST: START_PROCEDURE NAME_PROCEDURE OPEN . $@6 parameter_list CLOSE $@7 CODE END_FUNCTION
+
+    $default  reduce using rule 17 ($@6)
+
+    $@6  go to state 75
+
+
+State 55
+
+   45 INIT: ASSIGN . VAR TO NUM
+   46     | ASSIGN . VAR TO VAR
+
+    VAR  shift, and go to state 28
+
+
+State 56
+
+   47 INIT: VAR . FROM NUM TO NUM
+   49     | VAR . Q $@15 E
+
+    FROM  shift, and go to state 38
+    Q     shift, and go to state 39
+
+
+State 57
+
+   22 ST: FOR $@8 INIT . REPEAT $@9 CODE ENDFOR
+
+    REPEAT  shift, and go to state 76
+
+
+State 58
+
+   52 SC: READ DATATYPE COMMA . VAR
+
+    VAR  shift, and go to state 77
+
+
+State 59
+
+   47 INIT: VAR FROM NUM . TO NUM
+
+    TO  shift, and go to state 78
+
+
+State 60
+
+   49 INIT: VAR Q $@15 . E
+
+    OPEN  shift, and go to state 7
+    VAR   shift, and go to state 31
+    NUM   shift, and go to state 15
+
+    E  go to state 79
+    T  go to state 21
+    F  go to state 22
+
+
+State 61
+
+   28 EXPR: E RELOP $@10 . E
+
+    OPEN  shift, and go to state 7
+    VAR   shift, and go to state 31
+    NUM   shift, and go to state 15
+
+    E  go to state 80
+    T  go to state 21
+    F  go to state 22
+
+
+State 62
+
+   30 EXPR: E LOGOP $@11 . E
+
+    OPEN  shift, and go to state 7
+    VAR   shift, and go to state 31
+    NUM   shift, and go to state 15
+
+    E  go to state 81
+    T  go to state 21
+    F  go to state 22
+
+
+State 63
+
+   33 E: E AS $@12 . T
+
+    OPEN  shift, and go to state 7
+    VAR   shift, and go to state 31
+    NUM   shift, and go to state 15
+
+    T  go to state 82
+    F  go to state 22
+
+
+State 64
+
+   36 T: T MD $@13 . F
+
+    OPEN  shift, and go to state 7
+    VAR   shift, and go to state 31
+    NUM   shift, and go to state 15
+
+    F  go to state 83
+
+
+State 65
+
+   44 DEC: ASSIGN OPEN VAR DATATYPE . CLOSE
+
+    CLOSE  shift, and go to state 84
+
+
+State 66
+
+   46 INIT: ASSIGN VAR TO VAR .
+
+    $default  reduce using rule 46 (INIT)
+
+
+State 67
+
+   45 INIT: ASSIGN VAR TO NUM .
+
+    $default  reduce using rule 45 (INIT)
+
+
+State 68
+
+   42 N: VAR . $@14 N
+
+    $default  reduce using rule 41 ($@14)
+
+    $@14  go to state 85
+
+
+State 69
+
+   51 PR: PRINT OPEN QUOTE N . QUOTE CLOSE SEMI
+
+    QUOTE  shift, and go to state 86
+
+
+State 70
+
+   50 PR: PRINT DATATYPE COMMA VAR .
+
+    $default  reduce using rule 50 (PR)
+
+
+State 71
+
+   53 CON: VAR . RELOP VAR
+   54    | VAR . RELOP NUM
+   55    | VAR . LOGOP VAR
+
+    RELOP  shift, and go to state 87
+    LOGOP  shift, and go to state 88
+
+
+State 72
+
+   56 CON: BOOL .
+
+    $default  reduce using rule 56 (CON)
+
+
+State 73
+
+   13 ST: IF $@2 OPEN CON . $@3 CLOSE COPEN CODE CCLOSE
+
+    $default  reduce using rule 12 ($@3)
+
+    $@3  go to state 89
+
+
+State 74
+
+   16 ST: WHILE $@4 EXPR THEN . $@5 CODE ENDWHILE
+
+    $default  reduce using rule 15 ($@5)
+
+    $@5  go to state 90
+
+
+State 75
+
+   19 ST: START_PROCEDURE NAME_PROCEDURE OPEN $@6 . parameter_list CLOSE $@7 CODE END_FUNCTION
+
+    VAR  shift, and go to state 91
+
+    parameter_list  go to state 92
+
+
+State 76
+
+   22 ST: FOR $@8 INIT REPEAT . $@9 CODE ENDFOR
+
+    $default  reduce using rule 21 ($@9)
+
+    $@9  go to state 93
+
+
+State 77
+
+   52 SC: READ DATATYPE COMMA VAR .
+
+    $default  reduce using rule 52 (SC)
+
+
+State 78
+
+   47 INIT: VAR FROM NUM TO . NUM
+
+    NUM  shift, and go to state 94
+
+
+State 79
+
+   33 E: E . AS $@12 T
+   49 INIT: VAR Q $@15 E .
+
+    AS  shift, and go to state 45
+
+    $default  reduce using rule 49 (INIT)
+
+
+State 80
+
+   28 EXPR: E RELOP $@10 E .
+   33 E: E . AS $@12 T
+
+    AS  shift, and go to state 45
+
+    $default  reduce using rule 28 (EXPR)
+
+
+State 81
+
+   30 EXPR: E LOGOP $@11 E .
+   33 E: E . AS $@12 T
+
+    AS  shift, and go to state 45
+
+    $default  reduce using rule 30 (EXPR)
+
+
+State 82
+
+   33 E: E AS $@12 T .
+   36 T: T . MD $@13 F
+
+    MD  shift, and go to state 46
+
+    $default  reduce using rule 33 (E)
+
+
+State 83
+
+   36 T: T MD $@13 F .
+
+    $default  reduce using rule 36 (T)
+
+
+State 84
+
+   44 DEC: ASSIGN OPEN VAR DATATYPE CLOSE .
+
+    $default  reduce using rule 44 (DEC)
+
+
+State 85
+
+   42 N: VAR $@14 . N
+
+    VAR  shift, and go to state 68
+
+    $default  reduce using rule 43 (N)
+
+    N  go to state 95
+
+
+State 86
+
+   51 PR: PRINT OPEN QUOTE N QUOTE . CLOSE SEMI
+
+    CLOSE  shift, and go to state 96
+
+
+State 87
+
+   53 CON: VAR RELOP . VAR
+   54    | VAR RELOP . NUM
+
+    VAR  shift, and go to state 97
+    NUM  shift, and go to state 98
+
+
+State 88
+
+   55 CON: VAR LOGOP . VAR
+
+    VAR  shift, and go to state 99
+
+
+State 89
+
+   13 ST: IF $@2 OPEN CON $@3 . CLOSE COPEN CODE CCLOSE
+
+    CLOSE  shift, and go to state 100
+
+
+State 90
+
+   16 ST: WHILE $@4 EXPR THEN $@5 . CODE ENDWHILE
+
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    MAIN             shift, and go to state 10
+    START_PROCEDURE  shift, and go to state 11
+    FOR              shift, and go to state 12
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    CODE  go to state 101
+    STMT  go to state 17
+    ST    go to state 18
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 91
+
+   25 parameter_list: VAR . DATATYPE
+
+    DATATYPE  shift, and go to state 102
+
+
+State 92
+
+   19 ST: START_PROCEDURE NAME_PROCEDURE OPEN $@6 parameter_list . CLOSE $@7 CODE END_FUNCTION
+   26 parameter_list: parameter_list . COMMA VAR DATATYPE
+
+    COMMA  shift, and go to state 103
+    CLOSE  shift, and go to state 104
+
+
+State 93
+
+   22 ST: FOR $@8 INIT REPEAT $@9 . CODE ENDFOR
+
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    MAIN             shift, and go to state 10
+    START_PROCEDURE  shift, and go to state 11
+    FOR              shift, and go to state 12
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    CODE  go to state 105
+    STMT  go to state 17
+    ST    go to state 18
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 94
+
+   47 INIT: VAR FROM NUM TO NUM .
+
+    $default  reduce using rule 47 (INIT)
+
+
+State 95
+
+   42 N: VAR $@14 N .
+
+    $default  reduce using rule 42 (N)
+
+
+State 96
+
+   51 PR: PRINT OPEN QUOTE N QUOTE CLOSE . SEMI
+
+    SEMI  shift, and go to state 106
+
+
+State 97
+
+   53 CON: VAR RELOP VAR .
+
+    $default  reduce using rule 53 (CON)
+
+
+State 98
+
+   54 CON: VAR RELOP NUM .
+
+    $default  reduce using rule 54 (CON)
+
+
+State 99
+
+   55 CON: VAR LOGOP VAR .
+
+    $default  reduce using rule 55 (CON)
+
+
+State 100
+
+   13 ST: IF $@2 OPEN CON $@3 CLOSE . COPEN CODE CCLOSE
+
+    COPEN  shift, and go to state 107
+
+
+State 101
+
+    5 CODE: CODE . STMT
+    7     | CODE . ST
+   16 ST: WHILE $@4 EXPR THEN $@5 CODE . ENDWHILE
+
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    ENDWHILE         shift, and go to state 108
+    START_PROCEDURE  shift, and go to state 11
+    FOR              shift, and go to state 12
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    STMT  go to state 41
+    ST    go to state 42
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 102
+
+   25 parameter_list: VAR DATATYPE .
+
+    $default  reduce using rule 25 (parameter_list)
+
+
+State 103
+
+   26 parameter_list: parameter_list COMMA . VAR DATATYPE
+
+    VAR  shift, and go to state 109
+
+
+State 104
+
+   19 ST: START_PROCEDURE NAME_PROCEDURE OPEN $@6 parameter_list CLOSE . $@7 CODE END_FUNCTION
+
+    $default  reduce using rule 18 ($@7)
+
+    $@7  go to state 110
+
+
+State 105
+
+    5 CODE: CODE . STMT
+    7     | CODE . ST
+   22 ST: FOR $@8 INIT REPEAT $@9 CODE . ENDFOR
+
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    START_PROCEDURE  shift, and go to state 11
+    FOR              shift, and go to state 12
+    ENDFOR           shift, and go to state 111
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    STMT  go to state 41
+    ST    go to state 42
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 106
+
+   51 PR: PRINT OPEN QUOTE N QUOTE CLOSE SEMI .
+
+    $default  reduce using rule 51 (PR)
+
+
+State 107
+
+   13 ST: IF $@2 OPEN CON $@3 CLOSE COPEN . CODE CCLOSE
+
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    MAIN             shift, and go to state 10
+    START_PROCEDURE  shift, and go to state 11
+    FOR              shift, and go to state 12
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    CODE  go to state 112
+    STMT  go to state 17
+    ST    go to state 18
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 108
+
+   16 ST: WHILE $@4 EXPR THEN $@5 CODE ENDWHILE .
+
+    $default  reduce using rule 16 (ST)
+
+
+State 109
+
+   26 parameter_list: parameter_list COMMA VAR . DATATYPE
+
+    DATATYPE  shift, and go to state 113
+
+
+State 110
+
+   19 ST: START_PROCEDURE NAME_PROCEDURE OPEN $@6 parameter_list CLOSE $@7 . CODE END_FUNCTION
+
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    MAIN             shift, and go to state 10
+    START_PROCEDURE  shift, and go to state 11
+    FOR              shift, and go to state 12
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    CODE  go to state 114
+    STMT  go to state 17
+    ST    go to state 18
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 111
+
+   22 ST: FOR $@8 INIT REPEAT $@9 CODE ENDFOR .
+
+    $default  reduce using rule 22 (ST)
+
+
+State 112
+
+    5 CODE: CODE . STMT
+    7     | CODE . ST
+   13 ST: IF $@2 OPEN CON $@3 CLOSE COPEN CODE . CCLOSE
+
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    CCLOSE           shift, and go to state 115
+    START_PROCEDURE  shift, and go to state 11
+    FOR              shift, and go to state 12
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    STMT  go to state 41
+    ST    go to state 42
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 113
+
+   26 parameter_list: parameter_list COMMA VAR DATATYPE .
+
+    $default  reduce using rule 26 (parameter_list)
+
+
+State 114
+
+    5 CODE: CODE . STMT
+    7     | CODE . ST
+   19 ST: START_PROCEDURE NAME_PROCEDURE OPEN $@6 parameter_list CLOSE $@7 CODE . END_FUNCTION
+
+    ASSIGN           shift, and go to state 5
+    PRINT            shift, and go to state 6
+    OPEN             shift, and go to state 7
+    IF               shift, and go to state 8
+    WHILE            shift, and go to state 9
+    START_PROCEDURE  shift, and go to state 11
+    END_FUNCTION     shift, and go to state 116
+    FOR              shift, and go to state 12
+    READ             shift, and go to state 13
+    VAR              shift, and go to state 14
+    NUM              shift, and go to state 15
+
+    STMT  go to state 41
+    ST    go to state 42
+    EXPR  go to state 19
+    E     go to state 20
+    T     go to state 21
+    F     go to state 22
+    DEC   go to state 23
+    INIT  go to state 24
+    PR    go to state 25
+    SC    go to state 26
+
+
+State 115
+
+   13 ST: IF $@2 OPEN CON $@3 CLOSE COPEN CODE CCLOSE .
+
+    $default  reduce using rule 13 (ST)
+
+
+State 116
+
+   19 ST: START_PROCEDURE NAME_PROCEDURE OPEN $@6 parameter_list CLOSE $@7 CODE END_FUNCTION .
+
+    $default  reduce using rule 19 (ST)
